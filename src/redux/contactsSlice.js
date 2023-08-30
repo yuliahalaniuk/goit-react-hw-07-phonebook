@@ -15,6 +15,16 @@ const initialState = {
   filter: '',
 };
 
+const setError = (state, action) => {
+  state.contacts.isError = action.payload;
+  state.contacts.isLoading = false;
+};
+
+const setPendingStatus = (state, action) => {
+  state.contacts.isError = null;
+  state.contacts.isLoading = true;
+};
+
 const contactsSlice = createSlice({
   name: 'phonebook',
 
@@ -26,46 +36,28 @@ const contactsSlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchContacts.pending]: (state, action) => {
-      state.contacts.isError = null;
-      state.contacts.isLoading = true;
-    },
+    [fetchContacts.pending]: setPendingStatus,
     [fetchContacts.fulfilled]: (state, action) => {
       state.contacts.items = action.payload;
       state.contacts.isLoading = false;
     },
-    [fetchContacts.rejected]: (state, action) => {
-      state.contacts.isError = action.payload;
-      state.contacts.isLoading = false;
-    },
+    [fetchContacts.rejected]: setError,
 
-    [addContacts.pending]: (state, action) => {
-      state.contacts.isError = null;
-      state.contacts.isLoading = true;
-    },
+    [addContacts.pending]: setPendingStatus,
     [addContacts.fulfilled]: (state, action) => {
       state.contacts.items.push(action.payload);
       state.contacts.isLoading = false;
     },
-    [addContacts.rejected]: (state, action) => {
-      state.contacts.isError = action.payload;
-      state.contacts.isLoading = false;
-    },
+    [addContacts.rejected]: setError,
 
-    [deleteContacts.pending]: (state, action) => {
-      state.contacts.isError = null;
-      state.contacts.isLoading = true;
-    },
+    [deleteContacts.pending]: setPendingStatus,
     [deleteContacts.fulfilled]: (state, action) => {
       state.contacts.items = state.contacts.items.filter(
         contact => contact.id !== action.payload
       );
       state.contacts.isLoading = false;
     },
-    [deleteContacts.rejected]: (state, action) => {
-      state.contacts.isError = action.payload;
-      state.contacts.isLoading = false;
-    },
+    [deleteContacts.rejected]: setError,
   },
 });
 
