@@ -9,7 +9,7 @@ const initialState = {
   contacts: {
     items: [],
     isLoading: false,
-    isisError: null,
+   isError: null,
   },
 
   filter: '',
