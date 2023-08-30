@@ -35,3 +35,27 @@
   letter-spacing: 1.92px;
   margin-bottom: 40px;
 }
+
+.errorMessageWrap {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.errorMessage,
+.errorMessageMain {
+  max-width: 60%;
+  text-align: center;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.errorMessageMain {
+  font-size: 48px;
+  font-weight: 600;
+}

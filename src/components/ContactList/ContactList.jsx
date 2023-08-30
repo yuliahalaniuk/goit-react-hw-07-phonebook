@@ -2,13 +2,15 @@ import React from 'react';
 import css from './ContactList.module.css';
 import ContactListItem from 'components/ContactListItem/ContactListItem';
 
-import { getContacts, getFilter } from '../../redux/selectors';
+import { getContacts, getFilter, getLoading } from '../../redux/selectors';
 import { useSelector } from 'react-redux';
+import Loader from 'components/Loader/Loader';
 
 const ContactList = () => {
   const filterText = useSelector(getFilter);
   const contacts = useSelector(getContacts);
 
+  const isLoading = useSelector(getLoading);
   const getVisibleContacts = () => {
     const normalizedFilter = filterText.toLowerCase();
     return contacts.filter(contact =>
@@ -17,11 +19,17 @@ const ContactList = () => {
   };
 
   return (
-    <ul className={css.contactList}>
-      {getVisibleContacts().map(({ id, name, number }) => (
-        <ContactListItem key={id} id={id} name={name} number={number} />
-      ))}
-    </ul>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <ul className={css.contactList}>
+          {getVisibleContacts().map(({ id, name, phone }) => (
+            <ContactListItem key={id} id={id} name={name} number={phone} />
+          ))}
+        </ul>
+      )}
+    </>
   );
 };
 

@@ -54,3 +54,7 @@
   line-height: normal;
   letter-spacing: 1.6px;
 }
+
+.addContactBtn:disabled {
+  background-color: rgba(102, 106, 245, 0.7);
+}

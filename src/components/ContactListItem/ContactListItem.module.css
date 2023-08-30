@@ -27,3 +27,8 @@
   line-height: normal;
   letter-spacing: 1.6px;
 }
+
+.contactItemName {
+  color: rgba(102, 106, 245, 0.7);
+  font-weight: 600;
+}

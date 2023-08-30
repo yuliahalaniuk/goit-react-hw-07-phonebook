@@ -3,22 +3,23 @@ import React, { useState } from 'react';
 import css from './ContactForm.module.css';
 
 import { nanoid } from 'nanoid';
-import { getContacts } from '../../redux/selectors';
+import { getContacts, getLoading } from '../../redux/selectors';
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contactsSlice';
+import { addContacts } from '../../redux/contactsOperations';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const contacts = useSelector(getContacts);
+  const isLoading = useSelector(getLoading);
 
   const dispatch = useDispatch();
 
-  const addNewContact = ({ name, number }) => {
+  const addNewContact = contact => {
     contacts.find(contact => contact.name === name)
       ? alert(`${name} is already in your contacts.`)
-      : dispatch(addContact({ name, number, id: nanoid() }));
+      : dispatch(addContacts(contact));
   };
 
   const inputChangeHandle = e => {
@@ -35,7 +36,7 @@ const ContactForm = () => {
     e.preventDefault();
 
     const { name, number } = e.currentTarget.elements;
-    addNewContact({ name: name.value, number: number.value, id: nanoid() });
+    addNewContact({ name: name.value, phone: number.value, id: nanoid() });
     setName('');
     setNumber('');
   };
@@ -70,7 +71,7 @@ const ContactForm = () => {
         ></input>
       </label>
 
-      <button type="submit" className={css.addContactBtn}>
+      <button type="submit" className={css.addContactBtn} disabled={isLoading}>
         Add contact
       </button>
     </form>

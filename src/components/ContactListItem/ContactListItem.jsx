@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import css from './ContactListItem.module.css';
-import { deleteContact } from '../../redux/contactsSlice';
+import { deleteContacts } from '../../redux/contactsOperations';
 import { useDispatch } from 'react-redux';
 
 const ContactListItem = ({ id, name, number }) => {
@@ -11,13 +11,13 @@ const ContactListItem = ({ id, name, number }) => {
   return (
     <li className={css.contactItem}>
       <span>
-        {name}: {number}
+        <span className={css.contactItemName}>{name}:</span> {number}
       </span>
       <button
         className={css.contactItemBtn}
         type="button"
         onClick={() => {
-          dispatch(deleteContact(id));
+          dispatch(deleteContacts(id));
         }}
       >
         Delete
